@@ -1,17 +1,26 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+  <ul id="todos">
+    <li v-for="todo in todos" v-bind:key="todo.id">{{ todo.content }} </li>
+  </ul>
+  <p>poop </p>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      todos: []
+    }
+  }, 
+  created() {
+    fetch("/api/todos")
+      .then(res => res.json())
+      .then(json => {
+        this.todos = json.todos
+      })
   }
 }
 </script>
